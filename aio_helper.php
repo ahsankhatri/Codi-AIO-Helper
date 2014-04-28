@@ -56,9 +56,9 @@ if ( ! function_exists('getVars')) {
 if ( ! function_exists('cURL') ) {
 	function cURL($url, $post=false, $header=false) {
 		$ch = curl_init($url);
-		if ($post) {
+		if ($post !== false) {
 			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-			curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
 		}
 		curl_setopt($ch, CURLOPT_HEADER, $header);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -292,6 +292,53 @@ if (! function_exists('IMGResize') ) {
 	    } else {
 	    	return array('result' => $process, 'file_path' => realpath($file_path), 'file_name'=>basename($file_path), 'dir_path'=>dirname(realpath($file_path)));
 	    }
+	}
+}
+
+/*
+ * Simple function to remove certain string from start or at the end, just use the function and avoid extra validation
+ * Usage: removeCertainText('cl_name', 'cl_'); //name
+ */
+if (! function_exists('removeCertainText') ) {
+	function removeCertainText($str, $remove, $start=true) {
+		if ($start) {
+			return (substr($str, 0, strlen($remove)) == $remove) ? substr($str, strlen($remove)) : $str;
+		} else {
+			return (substr($str, -strlen($remove)) == $remove) ? substr($str, 0, -strlen($remove)) : $str;
+		}
+	}
+}
+
+/*
+ * Find element in multi dimensional array
+ */
+if (! function_exists('recursive_element') ) {
+	function recursive_element($needle,$haystack) {
+		foreach($haystack as $key=>$value) {
+		  $current_key=$key;
+		  if ($needle === $value OR (is_array($value) && recursive_element($needle,$value) !== false)) {
+		    return $current_key;
+		  }
+		}
+		return false;
+	}
+}
+
+/*
+ * Convert number to days, change according to your need
+ * 1=Sun, ..., 7=Sat
+ * convertNumtoDay(array(1,3,7)) // Sun, Tue, Sat
+ */
+if (! function_exists('convertNumtoDay') ) {
+	function convertNumtoDay($array) {
+		$result = '';
+		$daysStr = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
+		$days = explode(',', $array);
+		foreach ($days as $day) {
+			$result .= $daysStr[$day-1] . ', ';
+		}
+
+		return substr($result, 0, -2);
 	}
 }
 
