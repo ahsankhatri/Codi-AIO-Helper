@@ -1,7 +1,7 @@
 <?php
 
 /*
- *	Functions that needed in every projects (EHSAAN KHATREE)
+ *	Functions that needed in every projects (EHSAAN KHATREE)!
  */
 
 
