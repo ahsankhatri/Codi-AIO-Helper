@@ -342,4 +342,36 @@ if (! function_exists('convertNumtoDay') ) {
 	}
 }
 
+/**
+ * echo default specified value if 1st argument is either null/false/empty
+ * @return: String
+ * @param:  string, string
+ */
+if ( !function_exists('defaultValue') ) {
+    function defaultValue($str, $default='') {
+        if ( $str == '' || $str == NULL || $str == FALSE ) {
+            return $default;
+        }
+
+        return $str;
+    }
+}
+
+/**
+ * Most demanded function on almost every project!
+ * @return: array
+ * @param: array, string
+ */
+if ( !function_exists('array_map_index') ) {
+	function array_map_index($array, $index) {
+	    $newArray = array();
+	    foreach ($array as $key => $arr) {
+	        if ( isset($arr[$index]) )
+	            $newArray[ $arr[$index] ] = $arr;
+	    }
+
+	    return $newArray;
+	}
+}
+
 ?>
